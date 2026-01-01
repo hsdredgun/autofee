@@ -23,8 +23,7 @@ while read line; do
             
             # Extract values from log line
             # Format: "Channel ID: avg_fee=X, ratio=Y, current=Z, target=W, new=V"
-            avg_fee=$(echo "$line" | grep -oE "avg_fee=[0-9]+" | cut -d'=' -f2)
-            ratio=$(echo "$line" | grep -oE "ratio=[0-9.]+" | cut -d'=' -f2)
+            avg_fee=$(cat ~/autofee/avg_fees.json | jq -r --arg scid "$scid" '.[$scid] // empty')            ratio=$(echo "$line" | grep -oE "ratio=[0-9.]+" | cut -d'=' -f2)
             current=$(echo "$line" | grep -oE "current=[0-9]+" | cut -d'=' -f2)
             target=$(echo "$line" | grep -oE "target=[0-9]+" | cut -d'=' -f2)
             new=$(echo "$line" | grep -oE "new=[0-9.]+" | cut -d'=' -f2)
